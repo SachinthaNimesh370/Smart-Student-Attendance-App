@@ -88,7 +88,8 @@ const Location = () => {
 
 const sty = StyleSheet.create({
     conteiner:{
-      margin:10
+      margin:10,
+      backgroundColor:'black'
     },
     header:{
       fontWeight:'400',
