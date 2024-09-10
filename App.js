@@ -2,11 +2,7 @@ import * as React from 'react';
 import { Button, View ,StyleSheet} from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
-
-import Drawer_Navigation from './navigation/DrawerNavigation';
-
-
-
+import Drawer_Navigation from './src/navigation/DrawerNavigation';
 
 export default function App() {
   return (

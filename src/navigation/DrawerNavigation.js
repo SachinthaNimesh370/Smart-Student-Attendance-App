@@ -7,15 +7,6 @@ import Home from '../screens/Home';
 
 
 
-
-function NotificationsScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button onPress={() => navigation.goBack()} title="Go back home" />
-    </View>
-  );
-}
-
 const Drawer = createDrawerNavigator();
 
 const Drawer_Navigation = () => {
@@ -23,7 +14,6 @@ const Drawer_Navigation = () => {
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="Home">
         <Drawer.Screen name="Home" component={Home} />
-        <Drawer.Screen name="Notifications" component={NotificationsScreen} />
         <Drawer.Screen name="Location" component={Location} />
       </Drawer.Navigator>
     </NavigationContainer>
