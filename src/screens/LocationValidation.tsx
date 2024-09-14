@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { Text, View, PermissionsAndroid, TouchableOpacity, Alert, Linking, StyleSheet } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 
-type Location = {
+type LocationValidation = {
     latitude: number;
     longitude: number;
   } | null;
 
-const Location = () => {
-    const [currentLocation, setCurrentLocation] = useState<Location>(null);
+const LocationValidation = () => {
+    const [currentLocation, setCurrentLocation] = useState<LocationValidation>(null);
 
     const getCurrentLocation = () => {
       Geolocation.getCurrentPosition(
@@ -113,4 +113,4 @@ const sty = StyleSheet.create({
     }
   });
 
-export default Location
+export default LocationValidation
