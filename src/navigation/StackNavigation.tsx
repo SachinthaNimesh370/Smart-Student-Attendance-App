@@ -3,6 +3,7 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 import { NavigationContainer } from '@react-navigation/native';
 import Login from '../screens/Login';
 import Drawer_Navigation from './DrawerNavigation';
+import SignUp from '../screens/SignUp';
 
 
 const StackNavigation = () => {
@@ -11,6 +12,9 @@ const StackNavigation = () => {
       <NavigationContainer >
           <Stack.Navigator screenOptions={{headerShown:false}}>
               <Stack.Screen name="Login" component={Login} options={
+                  {cardStyleInterpolator:CardStyleInterpolators.forHorizontalIOS}
+              }/>
+              <Stack.Screen name="SignUp" component={SignUp} options={
                   {cardStyleInterpolator:CardStyleInterpolators.forHorizontalIOS}
               }/>
               
