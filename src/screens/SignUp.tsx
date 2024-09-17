@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Image } from 'react-native';
 import { StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import axios from 'axios';
 
 // Background Image
 const BackgroundImage= ()=>{
@@ -24,17 +25,52 @@ const HedederText=()=>{
   )
 }
 
+
 const SignInButton=( p : any)=>{
 
   const stack =p.stack;
-
-  const GotoHomePage=()=>{
-    stack.navigate('Drawer');
-  };
   
   // Input Text Area
+  const[userRegNumber,setRegNumber]= useState('')
   const[userEmail,setUserEmail]= useState('')
   const[userPassword,setUserPassword]= useState('')
+
+   console.log(userRegNumber+userPassword+userEmail);
+
+
+  const Buttn =()=>{
+    const studentData = {
+      studentRegNo: userRegNumber,
+      studentEmail: userEmail,
+      studentPassword: userPassword,
+      activeStatus: false
+      
+      
+      
+      
+    };
+    const saveStudent = async (studentData:any) => {
+      console.log(studentData)
+      
+      
+      try {
+        const response = await axios.post('http://192.168.8.124:8090/api/v1/student/signUp', studentData); 
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error while saving student:', error);
+      }
+    };
+    return(
+  <View>
+        <TouchableOpacity onPress={() => saveStudent(studentData)} activeOpacity={0.5}>
+          <View style={sty.signInButton}>
+            <Icon name="arrow-forward-sharp" size={30} color="white" />
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+    
+  }
 
   return(
     <View>
@@ -46,7 +82,7 @@ const SignInButton=( p : any)=>{
           <TextInput placeholder='Registation Number 2021/E/XXX'
                     placeholderTextColor={'#9d9d9d'}
                     style={sty.textInputField}
-                    onChangeText={(v)=>setUserEmail(v)}
+                    onChangeText={(v)=>setRegNumber(v)}
           />
         </View>
 
@@ -57,7 +93,9 @@ const SignInButton=( p : any)=>{
                     style={sty.textInputField}
                     onChangeText={(v)=>setUserEmail(v)}
           />
+          
         </View>
+
 
         {/* Password Field */}
         <View style={sty.textField}>
@@ -70,14 +108,14 @@ const SignInButton=( p : any)=>{
         </View>
 
         {/* Confirm Password Field */}
-        <View style={sty.textField}>
+        {/* <View style={sty.textField}>
           <TextInput placeholder='Confirm Password'
                     placeholderTextColor={'#9d9d9d'}
                     secureTextEntry
                     style={sty.textInputField}
                     onChangeText={(v)=>setUserPassword(v)}
           />
-        </View>
+        </View> */}
       </View>
 
       {/* Sign In Label Right Side */}
@@ -87,13 +125,7 @@ const SignInButton=( p : any)=>{
         </View>
 
       {/* Sign In Button */}
-        <View style={sty.signInButtonArea}>
-          <TouchableOpacity onPress={GotoHomePage} activeOpacity={0.5}>
-            <View style={sty.signInButton}>
-              <Icon name="arrow-forward-sharp"  size={30} color="white" />
-            </View>
-          </TouchableOpacity>
-        </View>
+        <Buttn/>
       </View>
     </View>
     
@@ -136,8 +168,6 @@ const SignUp = (props:any) => {
 
       {/* Bottom  */}
       <BottamLayer stack={stack}/>
-
-
       
     </View>
   )

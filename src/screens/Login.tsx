@@ -1,7 +1,6 @@
 
 import React, { useState } from 'react';
-import { Alert, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 
@@ -124,8 +123,7 @@ const Login = (props:any) => {
 
        {/* Sign In Area */}
        <SignInButton stack={stack}/>
-
-
+     
        {/* Bottom Layer */}
        <BottamLayer stack={stack}/>
        
