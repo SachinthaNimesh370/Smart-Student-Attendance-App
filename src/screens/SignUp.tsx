@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { Image } from 'react-native';
 import { StyleSheet } from 'react-native';
@@ -34,6 +34,7 @@ const SignInButton=( p : any)=>{
   const[userRegNumber,setRegNumber]= useState('')
   const[userEmail,setUserEmail]= useState('')
   const[userPassword,setUserPassword]= useState('')
+  const[userConfiPassword,setUserConfiPassword]= useState('')
 
    console.log(userRegNumber+userPassword+userEmail);
 
@@ -43,25 +44,34 @@ const SignInButton=( p : any)=>{
       studentRegNo: userRegNumber,
       studentEmail: userEmail,
       studentPassword: userPassword,
-      activeStatus: false
-      
-      
-      
-      
+      studentConfiPassword: userConfiPassword,
+      activestatus: true
     };
+
     const saveStudent = async (studentData:any) => {
       console.log(studentData)
-      
-      
-      try {
+      if(userConfiPassword==userPassword){
+        try {
         const response = await axios.post('http://192.168.8.124:8090/api/v1/student/signUp', studentData); 
         console.log(response.data);
+        Alert.alert("Registation Successfull !","Wait for Confirm Your Details");
+        setRegNumber("");
+        setUserEmail("");
+        setUserPassword("");
+        setUserConfiPassword("");
       } catch (error) {
         console.error('Error while saving student:', error);
+        
+      }}
+      else{
+        Alert.alert("Warning !","Pleace Check Password");
+        setUserPassword("");
+        setUserConfiPassword("");
       }
     };
     return(
   <View>
+    
         <TouchableOpacity onPress={() => saveStudent(studentData)} activeOpacity={0.5}>
           <View style={sty.signInButton}>
             <Icon name="arrow-forward-sharp" size={30} color="white" />
@@ -82,7 +92,9 @@ const SignInButton=( p : any)=>{
           <TextInput placeholder='Registation Number 2021/E/XXX'
                     placeholderTextColor={'#9d9d9d'}
                     style={sty.textInputField}
-                    onChangeText={(v)=>setRegNumber(v)}
+                    value={userRegNumber} // Ensure the value is linked to state
+                    onChangeText={setRegNumber} // Update state when input changes
+
           />
         </View>
 
@@ -91,7 +103,8 @@ const SignInButton=( p : any)=>{
           <TextInput placeholder='Email Address'
                     placeholderTextColor={'#9d9d9d'}
                     style={sty.textInputField}
-                    onChangeText={(v)=>setUserEmail(v)}
+                    value={userEmail} // Ensure the value is linked to state
+                    onChangeText={setUserEmail} // Update state when input changes
           />
           
         </View>
@@ -103,25 +116,27 @@ const SignInButton=( p : any)=>{
                     placeholderTextColor={'#9d9d9d'}
                     secureTextEntry
                     style={sty.textInputField}
-                    onChangeText={(v)=>setUserPassword(v)}
+                    value={userPassword} // Ensure the value is linked to state
+                    onChangeText={setUserPassword} // Update state when input changes
           />
         </View>
 
         {/* Confirm Password Field */}
-        {/* <View style={sty.textField}>
+         <View style={sty.textField}>
           <TextInput placeholder='Confirm Password'
                     placeholderTextColor={'#9d9d9d'}
                     secureTextEntry
                     style={sty.textInputField}
-                    onChangeText={(v)=>setUserPassword(v)}
+                    value={userConfiPassword} // Ensure the value is linked to state
+                    onChangeText={setUserConfiPassword} // Update state when input changes
           />
-        </View> */}
+        </View> 
       </View>
 
       {/* Sign In Label Right Side */}
       <View style={sty.signInArea}>
         <View style={sty.signInLabel}>
-          <Text style={sty.signInLabelText}>Sign In</Text>
+          <Text style={sty.signInLabelText}>Sign Up</Text>
         </View>
 
       {/* Sign In Button */}
