@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
-import LocationValidation from '../screens/LocationValidation';
-import Home from '../screens/Home';
-import MarkAttendance from '../screens/MarkAttendance';
-import AttendanceHistory from '../screens/AttendanceHistory';
-import TimeTable from '../screens/TimeTable';
-import SecurityAndPrivacy from '../screens/SecurityAndPrivacy';
+import LocationValidation from '../screens/drawerScreen/LocationValidation';
+import Home from '../screens/drawerScreen/Home';
+import MarkAttendance from '../screens/drawerScreen/MarkAttendance';
+import AttendanceHistory from '../screens/drawerScreen/AttendanceHistory';
+import TimeTable from '../screens/drawerScreen/TimeTable';
+import SecurityAndPrivacy from '../screens/drawerScreen/SecurityAndPrivacy';
 
 
 

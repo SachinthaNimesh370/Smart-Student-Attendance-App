@@ -1,15 +1,15 @@
-import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native'
-import React, { useState } from 'react'
-import { Image } from 'react-native';
-import { StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+
 import axios from 'axios';
+import React, { useState } from 'react';
+import { Alert, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+
 
 // Background Image
 const BackgroundImage= ()=>{
   return(
     <Image style={sty.backgroundImage} source={
-      require('../../assets/img/back.jpg')
+      require('../../../assets/img/back.jpg')
     }/>
   );
 }
@@ -19,55 +19,46 @@ const HedederText=()=>{
   return(
     <View style={sty.hederTextArea}>
       <Text style={sty.hederText}>
-        {'Create \n Account'}
+        {'Student Attendance System'}
       </Text>
     </View>
   )
 }
-
 
 const SignInButton=( p : any)=>{
 
   const stack =p.stack;
   
   // Input Text Area
-  const[userRegNumber,setRegNumber]= useState('')
-  const[userEmail,setUserEmail]= useState('')
+  const[userRegNo,setuserRegNo]= useState('')
   const[userPassword,setUserPassword]= useState('')
-  const[userConfiPassword,setUserConfiPassword]= useState('')
-
-   console.log(userRegNumber+userPassword+userEmail);
-
 
   const Buttn =()=>{
-    const studentData = {
-      studentRegNo: userRegNumber,
-      studentEmail: userEmail,
+    const studentData = { 
+      studentRegNo: userRegNo,
       studentPassword: userPassword,
-      studentConfiPassword: userConfiPassword,
-      activestatus: true
     };
 
     const saveStudent = async (studentData:any) => {
       console.log(studentData)
-      if(userConfiPassword==userPassword){
+      
         try {
-        const response = await axios.post('http://192.168.8.124:8090/api/v1/student/signUp', studentData); 
+        const response = await axios.post('http://192.168.8.124:8090/api/v1/student/signIn', studentData); 
         console.log(response.data);
-        Alert.alert("Registation Successfull !","Wait for Confirm Your Details");
-        setRegNumber("");
-        setUserEmail("");
-        setUserPassword("");
-        setUserConfiPassword("");
-      } catch (error) {
-        console.error('Error while saving student:', error);
+        if(response.data===true){
+          Alert.alert("Sign In Successfull !");
+          stack.navigate('Drawer');
+        }else{
+          Alert.alert("Sign In Fail !","Please Check Registaion Number And Password");
+        }
         
-      }}
-      else{
-        Alert.alert("Warning !","Pleace Check Password");
+        setuserRegNo("");
         setUserPassword("");
-        setUserConfiPassword("");
+      } catch (error) {
+        console.error("Sign In Fail"+ error);
       }
+
+      
     };
     return(
   <View>
@@ -87,32 +78,20 @@ const SignInButton=( p : any)=>{
       
       {/* Text Area */}
      <View style={sty.textFieldArea}>
-        {/* Reg No Field */}
-        <View style={sty.textField}>
-          <TextInput placeholder='Registation Number 2021/E/XXX'
-                    placeholderTextColor={'#9d9d9d'}
-                    style={sty.textInputField}
-                    value={userRegNumber} // Ensure the value is linked to state
-                    onChangeText={setRegNumber} // Update state when input changes
-
-          />
-        </View>
-
+      
         {/* Email Field */}
         <View style={sty.textField}>
-          <TextInput placeholder='Email Address'
+          <TextInput placeholder='User Email'
                     placeholderTextColor={'#9d9d9d'}
                     style={sty.textInputField}
-                    value={userEmail} // Ensure the value is linked to state
-                    onChangeText={setUserEmail} // Update state when input changes
+                    value={userRegNo} // Ensure the value is linked to state
+                    onChangeText={setuserRegNo} // Update state when input changes
           />
-          
         </View>
-
 
         {/* Password Field */}
         <View style={sty.textField}>
-          <TextInput placeholder='Enter Password'
+          <TextInput placeholder='User Password'
                     placeholderTextColor={'#9d9d9d'}
                     secureTextEntry
                     style={sty.textInputField}
@@ -120,74 +99,76 @@ const SignInButton=( p : any)=>{
                     onChangeText={setUserPassword} // Update state when input changes
           />
         </View>
-
-        {/* Confirm Password Field */}
-         <View style={sty.textField}>
-          <TextInput placeholder='Confirm Password'
-                    placeholderTextColor={'#9d9d9d'}
-                    secureTextEntry
-                    style={sty.textInputField}
-                    value={userConfiPassword} // Ensure the value is linked to state
-                    onChangeText={setUserConfiPassword} // Update state when input changes
-          />
-        </View> 
       </View>
 
       {/* Sign In Label Right Side */}
       <View style={sty.signInArea}>
         <View style={sty.signInLabel}>
-          <Text style={sty.signInLabelText}>Sign Up</Text>
+          <Text style={sty.signInLabelText}>Sign In</Text>
         </View>
 
       {/* Sign In Button */}
-        <Buttn/>
+        <View style={sty.signInButtonArea}>
+          <Buttn/>
+        </View>
       </View>
+      
     </View>
     
   );
  }
 
+ //Bottom Layer
  const BottamLayer=(p:any)=>{
 
-  const stack = p.stack;
+  const stack =p.stack;
 
-  const GotoSignIn =()=>{
-    stack.navigate('Login');
-  }
+  const GoToSignUp=()=>{
+    stack.navigate('SignUp')
+  } 
 
   return(
     <View style={sty.bottomArea}>
+
+      <TouchableOpacity onPress={GoToSignUp} activeOpacity={0.4}>
+        <View style={sty.signUpButtonField}>
+            <Text style={sty.signUpButton}>Sign Up</Text>
+        </View>
+      </TouchableOpacity>
+      
       <View  style={sty.fgtPasswordButtonField}>
-          <TouchableOpacity onPress={GotoSignIn} activeOpacity={0.4}>
-          <Text style={sty.signUpButton}>Sign In</Text>
-          </TouchableOpacity>
+        <TouchableOpacity activeOpacity={0.4}>
+          <Text style={sty.signUpButton}>Forget Password</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
  }
 
-
-const SignUp = (props:any) => {
+const Login = (props:any) => {
   const stack = props.navigation;
+
   return (
     <View style={sty.container}>
-      
-      {/* Background image */}
-      <BackgroundImage/>
+
+       {/* Background image */}
+       <BackgroundImage/>
 
       {/* Heder Text */}
-      <HedederText/>
+       <HedederText/>
 
-      {/* Sign In Area */}
-      <SignInButton stack={stack}/>
-
-      {/* Bottom  */}
-      <BottamLayer stack={stack}/>
-      
-    </View>
+       {/* Sign In Area */}
+       <SignInButton stack={stack}/>
+       
+     
+       {/* Bottom Layer */}
+       <BottamLayer stack={stack}/>
+       
+     </View>
   )
+  
+  
 }
-
 
 const sty =StyleSheet.create({
   container:{
@@ -212,7 +193,7 @@ const sty =StyleSheet.create({
   },
   textFieldArea:{
     marginHorizontal:40,
-    marginTop:75
+    marginTop:140
   },
   textField:{
     backgroundColor:'white',
@@ -230,7 +211,7 @@ const sty =StyleSheet.create({
     flexDirection:'row',
     marginHorizontal:40,
     position:'absolute',
-    marginTop:410,
+    marginTop:330,
 
   },
   signInLabel:{
@@ -284,4 +265,4 @@ const sty =StyleSheet.create({
   
 })
 
-export default SignUp
+export default Login
