@@ -1,8 +1,9 @@
-
-import React, { useState } from 'react';
-import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
+import { Image } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-
+import axios from 'axios';
 
 // Background Image
 const BackgroundImage= ()=>{
@@ -18,48 +19,103 @@ const HedederText=()=>{
   return(
     <View style={sty.hederTextArea}>
       <Text style={sty.hederText}>
-        {'Student Attendance System'}
+        {'Create \n Account'}
       </Text>
     </View>
   )
 }
 
+
 const SignInButton=( p : any)=>{
 
   const stack =p.stack;
-
-  const GotoHomePage=()=>{
-    stack.navigate('Drawer');
-  };
   
   // Input Text Area
+  const[userRegNumber,setRegNumber]= useState('')
   const[userEmail,setUserEmail]= useState('')
   const[userPassword,setUserPassword]= useState('')
+
+   console.log(userRegNumber+userPassword+userEmail);
+
+
+  const Buttn =()=>{
+    const studentData = {
+      studentRegNo: userRegNumber,
+      studentEmail: userEmail,
+      studentPassword: userPassword,
+      activeStatus: false
+      
+      
+      
+      
+    };
+    const saveStudent = async (studentData:any) => {
+      console.log(studentData)
+      
+      
+      try {
+        const response = await axios.post('http://192.168.8.124:8090/api/v1/student/signUp', studentData); 
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error while saving student:', error);
+      }
+    };
+    return(
+  <View>
+        <TouchableOpacity onPress={() => saveStudent(studentData)} activeOpacity={0.5}>
+          <View style={sty.signInButton}>
+            <Icon name="arrow-forward-sharp" size={30} color="white" />
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+    
+  }
 
   return(
     <View>
       
       {/* Text Area */}
      <View style={sty.textFieldArea}>
-      
+        {/* Reg No Field */}
+        <View style={sty.textField}>
+          <TextInput placeholder='Registation Number 2021/E/XXX'
+                    placeholderTextColor={'#9d9d9d'}
+                    style={sty.textInputField}
+                    onChangeText={(v)=>setRegNumber(v)}
+          />
+        </View>
+
         {/* Email Field */}
         <View style={sty.textField}>
-          <TextInput placeholder='User Email'
+          <TextInput placeholder='Email Address'
                     placeholderTextColor={'#9d9d9d'}
                     style={sty.textInputField}
                     onChangeText={(v)=>setUserEmail(v)}
           />
+          
         </View>
+
 
         {/* Password Field */}
         <View style={sty.textField}>
-          <TextInput placeholder='User Password'
+          <TextInput placeholder='Enter Password'
                     placeholderTextColor={'#9d9d9d'}
                     secureTextEntry
                     style={sty.textInputField}
                     onChangeText={(v)=>setUserPassword(v)}
           />
         </View>
+
+        {/* Confirm Password Field */}
+        {/* <View style={sty.textField}>
+          <TextInput placeholder='Confirm Password'
+                    placeholderTextColor={'#9d9d9d'}
+                    secureTextEntry
+                    style={sty.textInputField}
+                    onChangeText={(v)=>setUserPassword(v)}
+          />
+        </View> */}
       </View>
 
       {/* Sign In Label Right Side */}
@@ -69,69 +125,54 @@ const SignInButton=( p : any)=>{
         </View>
 
       {/* Sign In Button */}
-        <View style={sty.signInButtonArea}>
-          <TouchableOpacity onPress={GotoHomePage} activeOpacity={0.5}>
-            <View style={sty.signInButton}>
-              <Icon name="arrow-forward-sharp"  size={30} color="white" />
-            </View>
-          </TouchableOpacity>
-        </View>
+        <Buttn/>
       </View>
     </View>
     
   );
  }
 
- //Bottom Layer
  const BottamLayer=(p:any)=>{
 
-  const stack =p.stack;
+  const stack = p.stack;
 
-  const GoToSignUp=()=>{
-    stack.navigate('SignUp')
-  } 
+  const GotoSignIn =()=>{
+    stack.navigate('Login');
+  }
 
   return(
     <View style={sty.bottomArea}>
-
-      <TouchableOpacity onPress={GoToSignUp} activeOpacity={0.4}>
-        <View style={sty.signUpButtonField}>
-            <Text style={sty.signUpButton}>Sign Up</Text>
-        </View>
-      </TouchableOpacity>
-      
       <View  style={sty.fgtPasswordButtonField}>
-        <TouchableOpacity activeOpacity={0.4}>
-          <Text style={sty.signUpButton}>Forget Password</Text>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={GotoSignIn} activeOpacity={0.4}>
+          <Text style={sty.signUpButton}>Sign In</Text>
+          </TouchableOpacity>
       </View>
     </View>
   );
  }
 
-const Login = (props:any) => {
-  const stack = props.navigation;
 
+const SignUp = (props:any) => {
+  const stack = props.navigation;
   return (
     <View style={sty.container}>
-
-       {/* Background image */}
-       <BackgroundImage/>
+      
+      {/* Background image */}
+      <BackgroundImage/>
 
       {/* Heder Text */}
-       <HedederText/>
+      <HedederText/>
 
-       {/* Sign In Area */}
-       <SignInButton stack={stack}/>
-     
-       {/* Bottom Layer */}
-       <BottamLayer stack={stack}/>
-       
-     </View>
+      {/* Sign In Area */}
+      <SignInButton stack={stack}/>
+
+      {/* Bottom  */}
+      <BottamLayer stack={stack}/>
+      
+    </View>
   )
-  
-  
 }
+
 
 const sty =StyleSheet.create({
   container:{
@@ -156,7 +197,7 @@ const sty =StyleSheet.create({
   },
   textFieldArea:{
     marginHorizontal:40,
-    marginTop:140
+    marginTop:75
   },
   textField:{
     backgroundColor:'white',
@@ -174,7 +215,7 @@ const sty =StyleSheet.create({
     flexDirection:'row',
     marginHorizontal:40,
     position:'absolute',
-    marginTop:330,
+    marginTop:410,
 
   },
   signInLabel:{
@@ -228,4 +269,4 @@ const sty =StyleSheet.create({
   
 })
 
-export default Login
+export default SignUp
