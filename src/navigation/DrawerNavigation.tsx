@@ -12,8 +12,12 @@ import SecurityAndPrivacy from '../screens/drawerScreen/SecurityAndPrivacy';
 
 const Drawer = createDrawerNavigator();
 
-const Drawer_Navigation = () => {
+const Drawer_Navigation = ( {route}:any ) => {
+  const { userRegNo} = route.params;
+  console.log(userRegNo+"aaaaa");
+  console.log(userRegNo);
   return (
+    
     
       <Drawer.Navigator initialRouteName="Dashbord">
         <Drawer.Screen name="Dashbord" component={Home} />
