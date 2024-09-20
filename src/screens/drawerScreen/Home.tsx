@@ -11,10 +11,12 @@ import { StyleSheet } from 'react-native';
 
 
 
-const Home = () => {
+const Home = ({ route }: any) => {
+   const { userRegNo } = route.params;
   return (
     <View>
       <Text style={{fontSize:60,color:'black'}}>Dashbord</Text>
+      <Text style={{color:'black'}}>{userRegNo}</Text>
     
     </View>
   )

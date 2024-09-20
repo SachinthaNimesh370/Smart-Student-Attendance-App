@@ -35,7 +35,8 @@ const Buttn =()=>{
   );
 }
 
-const MarkAttendance = () => {
+const MarkAttendance = ({ route }: any) => {
+  const { userRegNo } = route.params;
   return (
     <View>
       <Text style={{fontSize:60,color:'black'}}>MarkAttendance</Text>

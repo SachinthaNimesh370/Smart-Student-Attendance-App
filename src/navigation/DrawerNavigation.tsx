@@ -14,18 +14,16 @@ const Drawer = createDrawerNavigator();
 
 const Drawer_Navigation = ( {route}:any ) => {
   const { userRegNo} = route.params;
-  console.log(userRegNo+"aaaaa");
-  console.log(userRegNo);
   return (
     
     
       <Drawer.Navigator initialRouteName="Dashbord">
-        <Drawer.Screen name="Dashbord" component={Home} />
-        <Drawer.Screen name="Mark Attendance" component={MarkAttendance}/>
-        <Drawer.Screen name="Attendance History" component={AttendanceHistory}/>
-        <Drawer.Screen name="Time Table" component={TimeTable}/>
-        <Drawer.Screen name="Location Validation" component={LocationValidation} />
-        <Drawer.Screen name="Security & Privacy" component={SecurityAndPrivacy}/>
+        <Drawer.Screen name="Dashbord" component={Home} initialParams={{ userRegNo }}/>
+        <Drawer.Screen name="Mark Attendance" component={MarkAttendance} initialParams={{ userRegNo }}/>
+        <Drawer.Screen name="Attendance History" component={AttendanceHistory} initialParams={{ userRegNo }}/>
+        <Drawer.Screen name="Time Table" component={TimeTable} initialParams={{ userRegNo }}/>
+        <Drawer.Screen name="Location Validation" component={LocationValidation} initialParams={{ userRegNo }}/>
+        <Drawer.Screen name="Security & Privacy" component={SecurityAndPrivacy} initialParams={{ userRegNo }}/>
       </Drawer.Navigator>
     
   )
