@@ -51,7 +51,6 @@ const SignInButton=( p : any)=>{
         }else{
           Alert.alert("Sign In Fail !","Please Check Registaion Number And Password");
         }
-        
         setuserRegNo("");
         setUserPassword("");
       } catch (error) {
