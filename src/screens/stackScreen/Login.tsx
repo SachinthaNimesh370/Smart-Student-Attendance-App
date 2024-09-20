@@ -47,11 +47,12 @@ const SignInButton=( p : any)=>{
         console.log(response.data);
         if(response.data===true){
           Alert.alert("Sign In Successfull !");
-          stack.navigate('Drawer');
+          console.log(studentData.studentRegNo+" In Login Page ")
+          stack.navigate('Drawer',{ userRegNo: studentData.studentRegNo });
+          
         }else{
           Alert.alert("Sign In Fail !","Please Check Registaion Number And Password");
         }
-        
         setuserRegNo("");
         setUserPassword("");
       } catch (error) {

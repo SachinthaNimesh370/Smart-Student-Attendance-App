@@ -27,8 +27,8 @@ const LocationValidation = () => {
         const granted = await PermissionsAndroid.request(
           PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
           {
-            title: 'Cool Photo App Location Permission',
-            message: 'Cool Photo App needs access to your location',
+            title: 'Attendance App Location Permission',
+            message: 'Attendance App needs access to your location',
             buttonNeutral: 'Ask Me Later',
             buttonNegative: 'Cancel',
             buttonPositive: 'OK',
