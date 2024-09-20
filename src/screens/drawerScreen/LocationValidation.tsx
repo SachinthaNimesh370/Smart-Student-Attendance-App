@@ -7,7 +7,8 @@ type LocationValidation = {
     longitude: number;
   } | null;
 
-const LocationValidation = () => {
+const LocationValidation = ({ route }: any) => {
+  const { userRegNo } = route.params;
     const [currentLocation, setCurrentLocation] = useState<LocationValidation>(null);
 
     const getCurrentLocation = () => {
