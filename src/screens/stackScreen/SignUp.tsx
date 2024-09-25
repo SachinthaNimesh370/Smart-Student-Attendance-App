@@ -45,7 +45,7 @@ const SignInButton=( p : any)=>{
       studentEmail: userEmail,
       studentPassword: userPassword,
       studentConfiPassword: userConfiPassword,
-      activestatus: true
+      activestatus: false
     };
 
     const saveStudent = async (studentData:any) => {
