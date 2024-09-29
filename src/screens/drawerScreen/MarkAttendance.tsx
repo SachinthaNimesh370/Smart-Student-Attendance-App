@@ -1,4 +1,4 @@
-import { View, Text, Alert, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Alert, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import React, { useState } from 'react';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -12,6 +12,7 @@ const Buttn = ({ userRegNo }: any) => {
   } | null;
 
   const [currentLocation, setCurrentLocation] = useState<LocationValidation>(null);
+  const [loading, setLoading] = useState(false); // Loading state
 
   const currentDate = new Date();
   const currentDateOnly = currentDate.toLocaleDateString();
@@ -19,6 +20,7 @@ const Buttn = ({ userRegNo }: any) => {
 
   const getCurrentLocation = async (attendanceData: any) => {
     const locations: { latitude: number; longitude: number }[] = [];
+    setLoading(true); // Set loading to true when starting to get location
 
     for (let i = 0; i < 100; i++) {
       await new Promise((resolve) => {
@@ -36,21 +38,20 @@ const Buttn = ({ userRegNo }: any) => {
         );
       });
 
-      // Wait for 10 seconds before the next location fetch
+      // Wait for 1 second before the next location fetch
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
 
     // Calculate average location
     const avgLocation = getAverageLocation(locations);
-
-    // Set the averaged location to the state
     setCurrentLocation(avgLocation);
 
     // Update the attendance data with averaged location
     attendanceData.location = [avgLocation.latitude, avgLocation.longitude];
 
     // Send the averaged location to the backend
-    saveStudent(attendanceData);
+    await saveStudent(attendanceData);
+    setLoading(false); // Set loading to false after the process is done
   };
 
   // Function to calculate average location
@@ -114,9 +115,12 @@ const Buttn = ({ userRegNo }: any) => {
 
   return (
     <View style={sty.area}>
-      <TouchableOpacity onPress={requestPermission} activeOpacity={0.5}>
+      <TouchableOpacity onPress={requestPermission} activeOpacity={0.5} disabled={loading} style={sty.button}>
         <View style={sty.signInButton}>
           <Icon name="power-outline" size={150} color="white" />
+          {loading && (
+            <ActivityIndicator size={350} color="#367cfe" style={sty.loadingIndicator} /> // Center loading icon
+          )}
         </View>
       </TouchableOpacity>
     </View>
@@ -143,6 +147,9 @@ const sty = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  button: {
+    position: 'relative', // Position for loading indicator
+  },
   signInButton: {
     backgroundColor: '#367cfe',
     height: 260,
@@ -150,6 +157,14 @@ const sty = StyleSheet.create({
     borderRadius: 260,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  loadingIndicator: {
+    position: 'absolute', // Center the loading indicator
+    top: '50%', // Center vertically
+    left: '50%', // Center horizontally
+    marginLeft: -175, // Adjust horizontally based on the size of the icon
+    marginTop: -175, // Adjust vertically based on the size of the icon
+    
   },
 });
 
