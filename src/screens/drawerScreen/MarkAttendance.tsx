@@ -18,18 +18,56 @@ const Buttn = ({ userRegNo }: any) => {
   const currentTime = currentDate.toLocaleTimeString();
 
   const getCurrentLocation = async (attendanceData: any) => {
-    Geolocation.getCurrentPosition(
-      position => {
-        const { latitude, longitude } = position.coords;
-        setCurrentLocation({ latitude, longitude });
+    const locations: { latitude: number; longitude: number }[] = [];
 
-        // After location is set, we send the data
-        attendanceData.location = [latitude, longitude];
-        saveStudent(attendanceData);  // Call API after location is available
-      },
-      error => Alert.alert('Error', error.message),
-      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-    );
+    for (let i = 0; i < 100; i++) {
+      await new Promise((resolve) => {
+        Geolocation.getCurrentPosition(
+          position => {
+            const { latitude, longitude } = position.coords;
+            locations.push({ latitude, longitude });
+            resolve(null);
+          },
+          error => {
+            Alert.alert('Error', error.message);
+            resolve(null); // Resolve even on error to continue the loop
+          },
+          { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+        );
+      });
+
+      // Wait for 10 seconds before the next location fetch
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+
+    // Calculate average location
+    const avgLocation = getAverageLocation(locations);
+
+    // Set the averaged location to the state
+    setCurrentLocation(avgLocation);
+
+    // Update the attendance data with averaged location
+    attendanceData.location = [avgLocation.latitude, avgLocation.longitude];
+
+    // Send the averaged location to the backend
+    saveStudent(attendanceData);
+  };
+
+  // Function to calculate average location
+  const getAverageLocation = (locations: { latitude: number; longitude: number }[]) => {
+    if (locations.length === 0) return { latitude: 0, longitude: 0 };
+
+    const sum = locations.reduce((acc, loc) => {
+      return {
+        latitude: acc.latitude + loc.latitude,
+        longitude: acc.longitude + loc.longitude,
+      };
+    }, { latitude: 0, longitude: 0 });
+
+    return {
+      latitude: sum.latitude / locations.length,
+      longitude: sum.longitude / locations.length,
+    };
   };
 
   const requestPermission = async () => {
@@ -69,7 +107,7 @@ const Buttn = ({ userRegNo }: any) => {
       const response = await axios.post('http://192.168.8.124:8090/api/v1/student/attendMark', attendanceData);
       console.log(response.data);
       Alert.alert(response.data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error while saving student:', error);
     }
   };
@@ -89,7 +127,7 @@ const MarkAttendance = ({ route }: any) => {
   const { userRegNo } = route.params;
   return (
     <View style={sty.container}>
-      <Text style={{ fontSize: 60, color: 'black' }}>MarkAttendance</Text>
+      <Text style={{ fontSize: 60, color: 'black' }}>Mark Attendance</Text>
       <Buttn userRegNo={userRegNo} />
     </View>
   );
