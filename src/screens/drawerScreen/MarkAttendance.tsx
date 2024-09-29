@@ -44,12 +44,20 @@ const Buttn = ({ userRegNo }: any) => {
 
     // Calculate average location
     const avgLocation = getAverageLocation(locations);
-    setCurrentLocation(avgLocation);
 
-    // Update the attendance data with averaged location
-    attendanceData.location = [avgLocation.latitude, avgLocation.longitude];
+    // Round to 5 decimal places
+    const roundedLatitude = parseFloat(avgLocation.latitude.toFixed(5));
+    const roundedLongitude = parseFloat(avgLocation.longitude.toFixed(5));
 
-    // Send the averaged location to the backend
+    setCurrentLocation({
+      latitude: roundedLatitude,
+      longitude: roundedLongitude,
+    });
+
+    // Update the attendance data with rounded location
+    attendanceData.location = [roundedLatitude, roundedLongitude];
+
+    // Send the rounded location to the backend
     await saveStudent(attendanceData);
     setLoading(false); // Set loading to false after the process is done
   };
