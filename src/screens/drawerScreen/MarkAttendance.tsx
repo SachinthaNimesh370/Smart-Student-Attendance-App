@@ -113,7 +113,7 @@ const Buttn = ({ userRegNo }: any) => {
   const saveStudent = async (attendanceData: any) => {
     console.log(attendanceData);
     try {
-      const response = await axios.post('http://192.168.8.124:8090/api/v1/student/attendMark', attendanceData);
+      const response = await axios.post('http://192.168.0.153:8090/api/v1/student/attendMark', attendanceData);
       console.log(response.data);
       Alert.alert(response.data);
     } catch (error: any) {

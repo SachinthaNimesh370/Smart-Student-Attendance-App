@@ -43,7 +43,7 @@ const SignInButton=( p : any)=>{
       console.log(studentData)
       
         try {
-        const response = await axios.post('http://192.168.8.124:8090/api/v1/student/signIn', studentData); 
+        const response = await axios.post('http://192.168.0.153:8090/api/v1/student/signIn', studentData); 
         console.log(response.data);
         if(response.data===true){
           Alert.alert("Sign In Successfull !");
