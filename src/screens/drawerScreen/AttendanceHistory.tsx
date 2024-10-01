@@ -10,7 +10,7 @@ const AttendanceHistory = ({ route }: any) => {
   // Function to fetch attendance data from the backend
   const fetchAttendanceData = async () => {
     try {
-      const response = await axios.get(`http://192.168.8.124:8090/api/v1/student/getAttendanceByRegNo/${userRegNo}`);
+      const response = await axios.get(`http://192.168.0.153:8090/api/v1/student/getAttendanceByRegNo/${userRegNo}`);
       setAttendanceData(response.data);  // Set the retrieved data in state
       setLoading(false);  // Stop loading once data is fetched
     } catch (error) {
