@@ -1,38 +1,35 @@
-import { View, Text } from 'react-native';
+import { View, Text, Dimensions } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { StyleSheet } from 'react-native';
+import { PieChart } from 'react-native-chart-kit';
 
-const Home = ({ route }: any) => {
-  const { userRegNo } = route.params;
+const screenWidth = Dimensions.get('window').width;
+
+// Component to fetch and calculate attendance percentage
+const AttendancePercentage = ({ userRegNo }: { userRegNo: string }) => {
   const [attendancePercentage, setAttendancePercentage] = useState<number | null>(null);
 
   useEffect(() => {
-    // Function to calculate attendance percentage
     const fetchAttendanceData = async () => {
       try {
         const response = await axios.get(`http://192.168.0.153:8090/api/v1/student/getAttendanceByRegNo/${userRegNo}`);
         
         const attendanceData = response.data[0]; // Get the first object for this student
         
-        // Initialize counters for total days and present days
         let totalDays = 0;
         let presentDays = 0;
 
         // Loop through the keys of the attendance data
         for (let key in attendanceData) {
-          // Skip the 'student_reg_no' field
           if (key !== 'student_reg_no') {
-            totalDays++; // Increment total days count
-
-            // Check if the value is `true` (present)
+            totalDays++;
             if (attendanceData[key] === true) {
-              presentDays++; // Increment present days count
+              presentDays++;
             }
           }
         }
 
-        // Calculate the percentage
         if (totalDays > 0) {
           const percentage = (presentDays / totalDays) * 100;
           setAttendancePercentage(percentage);
@@ -44,33 +41,80 @@ const Home = ({ route }: any) => {
       }
     };
 
-    // Fetch attendance data on component mount
     fetchAttendanceData();
   }, [userRegNo]);
 
+  const chartData = attendancePercentage !== null ? [
+    {
+      name: 'Present',
+      population: attendancePercentage,
+      color: 'green',
+      legendFontColor: '#7F7F7F',
+      legendFontSize: 15,
+    },
+    {
+      name: 'Absent',
+      population: 100 - attendancePercentage,
+      color: 'red',
+      legendFontColor: '#7F7F7F',
+      legendFontSize: 15,
+    },
+  ] : [];
+
   return (
-    <View style={styles.container}>
+    <>
+      {attendancePercentage !== null ? (
+        <>
+          <Text style={styles.percentage}>
+            Attendance Percentage: {attendancePercentage.toFixed(2)}%
+          </Text>
+          <PieChart
+            data={chartData}
+            width={screenWidth}
+            height={220}
+            chartConfig={{
+              backgroundColor: '#1cc910',
+              backgroundGradientFrom: '#eff3ff',
+              backgroundGradientTo: '#efefef',
+              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+            }}
+            accessor="population"
+            backgroundColor="transparent"
+            paddingLeft="15"
+            absolute
+          />
+        </>
+      ) : (  
+          <Text style={styles.loadingText}>Loading attendance data...</Text>        
+      )}
+    </>
+  );
+};
+
+// Component to display user info and attendance
+const UserInfo = ({ userRegNo }: any) => {
+  return (
+    <View >
       <Text style={styles.header}>Dashboard</Text>
       <Text style={styles.userRegNo}>User Registration No: {userRegNo}</Text>
-      
-      {attendancePercentage !== null ? (
-        <Text style={styles.percentage}>
-          Attendance Percentage: {attendancePercentage.toFixed(2)}%
-        </Text>
-      ) : (
-        <Text style={styles.loadingText}>Loading attendance data...</Text>
-      )}
+      <AttendancePercentage userRegNo={userRegNo} />
+    </View>
+  );
+};
+
+// Main Home Component
+const Home = ({ route }: any) => {
+  const { userRegNo } = route.params;
+
+  return (
+    <View >
+      <UserInfo userRegNo={userRegNo} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
+
   header: {
     fontSize: 60,
     color: 'black',
@@ -87,6 +131,7 @@ const styles = StyleSheet.create({
   loadingText: {
     fontSize: 18,
     color: 'gray',
+    
   },
 });
 
