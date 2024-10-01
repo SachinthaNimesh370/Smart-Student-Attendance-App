@@ -22,7 +22,7 @@ const Buttn = ({ userRegNo }: any) => {
     const locations: { latitude: number; longitude: number }[] = [];
     setLoading(true); // Set loading to true when starting to get location
 
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 10; i++) {
       await new Promise((resolve) => {
         Geolocation.getCurrentPosition(
           position => {
