@@ -14,7 +14,7 @@ const AttendancePercentage = ({ userRegNo }: { userRegNo: string }) => {
     const fetchAttendanceData = async () => {
       try {
         const response = await axios.get(`http://192.168.0.153:8090/api/v1/student/getAttendanceByRegNo/${userRegNo}`);
-        const attendanceData = response.data[0];
+        const attendanceData = response.data.data[0];
         let totalDays = 0;
         let presentDays = 0;
 

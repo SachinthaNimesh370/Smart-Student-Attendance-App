@@ -42,21 +42,22 @@ const SignInButton=( p : any)=>{
     const saveStudent = async (studentData:any) => {
       console.log(studentData)
       
-        try {
-        const response = await axios.post('http://192.168.0.153:8090/api/v1/student/signIn', studentData); 
-        console.log(response.data);
-        if(response.data===true){
-          Alert.alert("Sign In Successfull !");
-          console.log(studentData.studentRegNo+" In Login Page ")
-          stack.navigate('Drawer',{ userRegNo: studentData.studentRegNo });
-          
-        }else{
-          Alert.alert("Sign In Fail !","Please Check Registaion Number And Password");
+      try {
+        const response = await axios.post('http://192.168.0.153:8090/api/v1/student/signIn', studentData);
+        console.log(response.data.data);
+        
+        if (response.data.data === true) {
+          // Alert.alert("Sign In Successful!");
+          console.log(studentData.studentRegNo + " In Login Page ");
+          stack.navigate('Drawer', { userRegNo: studentData.studentRegNo });
+        } else {
+          Alert.alert("Sign In Failed!", "Please check Registration Number and Password");
         }
+        
         setuserRegNo("");
         setUserPassword("");
       } catch (error) {
-        console.error("Sign In Fail"+ error);
+        console.error("Sign In Failed: " + error);
       }
 
       

@@ -114,8 +114,8 @@ const Buttn = ({ userRegNo }: any) => {
     console.log(attendanceData);
     try {
       const response = await axios.post('http://192.168.0.153:8090/api/v1/student/attendMark', attendanceData);
-      console.log(response.data);
-      Alert.alert('Success', response.data); // Ensure text is wrapped in <Text>
+      console.log(response.data.data);
+      Alert.alert('Success', response.data.data); // Ensure text is wrapped in <Text>
     } catch (error: any) {
       console.error('Error while saving student:', error);
       Alert.alert('Error', 'Could not save attendance data.'); // Ensure error is also wrapped
