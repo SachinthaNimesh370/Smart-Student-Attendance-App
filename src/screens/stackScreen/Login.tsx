@@ -19,7 +19,7 @@ const HedederText=()=>{
   return(
     <View style={sty.hederTextArea}>
       <Text style={sty.hederText}>
-        {'Student Attendance System'}
+        {'Attendance System'}
       </Text>
     </View>
   )
@@ -188,10 +188,11 @@ const sty =StyleSheet.create({
     marginTop:150
   },
   hederText:{
-    fontSize:70,
-    fontWeight:'600',
+    fontSize:78,
+    fontWeight:'700',
     textAlign:'center',
-    color:'white'
+    color:'white',
+    fontFamily: "Poppins-SemiBold"
   },
   textFieldArea:{
     marginHorizontal:40,

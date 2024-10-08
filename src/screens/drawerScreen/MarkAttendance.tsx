@@ -22,7 +22,7 @@ const Buttn = ({ userRegNo }: any) => {
     const locations: { latitude: number; longitude: number }[] = [];
     setLoading(true); // Set loading to true when starting to get location
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 15; i++) { // Increased the number of location samples to 15
       await new Promise((resolve) => {
         Geolocation.getCurrentPosition(
           position => {
@@ -34,7 +34,12 @@ const Buttn = ({ userRegNo }: any) => {
             Alert.alert('Error', error.message); // Alert error message
             resolve(null); // Resolve even on error to continue the loop
           },
-          { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+          {
+            enableHighAccuracy: true, // Highest possible accuracy
+            timeout: 30000, // Increased timeout to allow more accurate readings
+            maximumAge: 0, // No cached data, force a fresh location
+            distanceFilter: 0, // Track location even with small movements
+          }
         );
       });
 
