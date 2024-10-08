@@ -22,7 +22,7 @@ const Buttn = ({ userRegNo }: any) => {
     const locations: { latitude: number; longitude: number }[] = [];
     setLoading(true); // Set loading to true when starting to get location
 
-    for (let i = 0; i < 15; i++) { // Increased the number of location samples to 15
+    for (let i = 0; i < 10; i++) { // Increased the number of location samples to 15
       await new Promise((resolve) => {
         Geolocation.getCurrentPosition(
           position => {
@@ -133,7 +133,7 @@ const Buttn = ({ userRegNo }: any) => {
         <View style={sty.signInButton}>
           <Icon name="power-outline" size={150} color="white" />
           {loading && (
-            <ActivityIndicator size={350} color="#367cfe" style={sty.loadingIndicator} /> // Center loading icon
+            <ActivityIndicator size={350} color="#2471ff" style={sty.loadingIndicator} /> // Center loading icon
           )}
         </View>
       </TouchableOpacity>
@@ -163,14 +163,16 @@ const sty = StyleSheet.create({
   },
   button: {
     position: 'relative', // Position for loading indicator
+    
   },
   signInButton: {
     backgroundColor: '#367cfe',
-    height: 260,
-    width: 260,
-    borderRadius: 260,
+    height: 250,
+    width: 250,
+    borderRadius: 250,
     justifyContent: 'center',
     alignItems: 'center',
+    
   },
   loadingIndicator: {
     position: 'absolute', // Center the loading indicator

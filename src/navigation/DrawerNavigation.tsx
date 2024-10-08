@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import Home from '../screens/drawerScreen/Home';
 import MarkAttendance from '../screens/drawerScreen/MarkAttendance';
 import AttendanceHistory from '../screens/drawerScreen/AttendanceHistory';
-import TimeTable from '../screens/drawerScreen/TimeTable';
+import TimeTable from '../screens/drawerScreen/Notification';
 import SecurityAndPrivacy from '../screens/drawerScreen/SecurityAndPrivacy';
 import Ionicons from 'react-native-vector-icons/Ionicons'; // Update import
 
