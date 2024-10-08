@@ -85,6 +85,8 @@ const SignInButton=( p : any)=>{
 
   return(
     <View>
+      
+      
        
       
       {/* Text Area */}
@@ -133,17 +135,24 @@ const SignInButton=( p : any)=>{
                     onChangeText={setUserConfiPassword} // Update state when input changes
           />
         </View> 
-      </View>
-
-      {/* Sign In Label Right Side */}
+        {/* Sign In Label Right Side */}
       <View style={sty.signInArea}>
         <View style={sty.signInLabel}>
           <Text style={sty.signInLabelText}>Sign Up</Text>
         </View>
-
-        {/* Sign Up Button */}
+        
+          {/* Sign Up Button */}
         <Buttn/>
+        
+
+        
       </View>
+      </View>
+      
+      
+
+      
+      
     </View>
     
   );
@@ -181,9 +190,13 @@ const SignUp = (props:any) => {
 
       {/* Heder Text */}
       <HedederText/>
-     
+
+      <KeyboardAwareScrollView>
         {/* Sign In Area */}
         <SignInButton stack={stack}/>
+      </KeyboardAwareScrollView>
+     
+        
       
       
       {/* Bottom  */}
@@ -210,7 +223,8 @@ const sty =StyleSheet.create({
   },
   hederTextArea:{
     justifyContent:'center',
-    marginTop:150
+    marginTop:150,
+    marginBottom:30,
   },
   hederText:{
     fontSize:80,
@@ -221,7 +235,7 @@ const sty =StyleSheet.create({
   },
   textFieldArea:{
     marginHorizontal:40,
-    marginTop:75
+    paddingTop:55
   },
   textField:{
     backgroundColor:'white',
@@ -237,9 +251,8 @@ const sty =StyleSheet.create({
   },
   signInArea:{
     flexDirection:'row',
-    marginHorizontal:40,
-    position:'absolute',
-    marginTop:390,
+    position:'relative',
+    marginTop:10,
 
   },
   signInLabel:{
@@ -262,7 +275,8 @@ const sty =StyleSheet.create({
     width:60,
     borderRadius:50,
     justifyContent:'center',
-    alignItems:'center'
+    alignItems:'center',
+    
     
   },
   bottomArea:{

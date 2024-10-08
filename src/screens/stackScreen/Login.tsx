@@ -2,6 +2,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Alert, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 
@@ -158,9 +159,11 @@ const Login = (props:any) => {
 
       {/* Heder Text */}
        <HedederText/>
-
-       {/* Sign In Area */}
-       <SignInButton stack={stack}/>
+       <KeyboardAwareScrollView>
+        {/* Sign In Area */}
+        <SignInButton stack={stack}/>
+       </KeyboardAwareScrollView>
+       
        
      
        {/* Bottom Layer */}
@@ -185,7 +188,7 @@ const sty =StyleSheet.create({
   },
   hederTextArea:{
     justifyContent:'center',
-    marginTop:150
+    marginTop:190
   },
   hederText:{
     fontSize:78,
@@ -196,7 +199,7 @@ const sty =StyleSheet.create({
   },
   textFieldArea:{
     marginHorizontal:40,
-    marginTop:140
+    marginTop:120
   },
   textField:{
     backgroundColor:'white',
@@ -213,8 +216,8 @@ const sty =StyleSheet.create({
   signInArea:{
     flexDirection:'row',
     marginHorizontal:40,
-    position:'absolute',
-    marginTop:330,
+    position:'relative',
+    marginTop:30,
 
   },
   signInLabel:{
