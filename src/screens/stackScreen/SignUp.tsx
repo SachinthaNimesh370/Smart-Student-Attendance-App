@@ -4,6 +4,7 @@ import { Image } from 'react-native';
 import { StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 // Background Image
 const BackgroundImage= ()=>{
@@ -84,6 +85,7 @@ const SignInButton=( p : any)=>{
 
   return(
     <View>
+       
       
       {/* Text Area */}
      <View style={sty.textFieldArea}>
@@ -139,7 +141,7 @@ const SignInButton=( p : any)=>{
           <Text style={sty.signInLabelText}>Sign Up</Text>
         </View>
 
-      {/* Sign Up Button */}
+        {/* Sign Up Button */}
         <Buttn/>
       </View>
     </View>
@@ -175,14 +177,20 @@ const SignUp = (props:any) => {
       {/* Background image */}
       <BackgroundImage/>
 
+      
+
       {/* Heder Text */}
       <HedederText/>
-
-      {/* Sign In Area */}
-      <SignInButton stack={stack}/>
-
+     
+        {/* Sign In Area */}
+        <SignInButton stack={stack}/>
+      
+      
       {/* Bottom  */}
       <BottamLayer stack={stack}/>
+      
+
+      
       
     </View>
   )
@@ -231,7 +239,7 @@ const sty =StyleSheet.create({
     flexDirection:'row',
     marginHorizontal:40,
     position:'absolute',
-    marginTop:410,
+    marginTop:390,
 
   },
   signInLabel:{
