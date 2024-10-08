@@ -6,6 +6,13 @@ import { PieChart, LineChart } from 'react-native-chart-kit';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const screenWidth = Dimensions.get('window').width;
+// NotificationDTO interface
+interface NotificationDTO {
+  id: number;
+  date: string;
+  time: string;
+  notification: string;
+}
 
 const AttendancePercentage = ({ userRegNo }: { userRegNo: string }) => {
   const [attendancePercentage, setAttendancePercentage] = useState<number | null>(null);
@@ -99,6 +106,43 @@ const AttendanceTrend = () => {
   );
 };
 
+// Notification component
+const LatestNotification = () => {
+  const [latestNotification, setLatestNotification] = useState<NotificationDTO | null>(null);
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const response = await axios.get('http://192.168.0.153:8090/api/v1/student/getAllNotifications');
+        const notifications = response.data;
+        if (notifications.length > 0) {
+          setLatestNotification(notifications[0]); // Display the latest notification (assuming the first is the latest)
+        }
+      } catch (error) {
+        console.error('Error fetching notifications:', error);
+      }
+    };
+
+    fetchNotifications();
+  }, []);
+
+  return (
+    <View style={[styles.card ,{backgroundColor: '#fffce2'}]}>
+      <Ionicons name="notifications-outline" size={40} color="#FF5722" />
+      <Text style={styles.cardTitle}>Latest Notification</Text>
+      {latestNotification ? (
+        <>
+          <Text style={styles.cardInfo}>Date: {latestNotification.date}</Text>
+          <Text style={styles.cardInfo}>Time: {latestNotification.time}</Text>
+          <Text style={styles.cardInfo}>Message: {latestNotification.notification}</Text>
+        </>
+      ) : (
+        <Text style={styles.loadingText}>No notifications available</Text>
+      )}
+    </View>
+  );
+};
+
 const Home = ({ route }: any) => {
   const { userRegNo } = route.params;
 
@@ -116,15 +160,18 @@ const Home = ({ route }: any) => {
           <Text style={styles.cardTitle}>Attendance</Text>
           <AttendancePercentage userRegNo={userRegNo} />
         </View>
-        <View style={styles.card}>
+        <View style={styles.card }>
           <Ionicons name="calendar-outline" size={40} color="#FF9800" />
-          <Text style={styles.cardTitle}>Upcoming Events</Text>
-          <Text style={styles.cardInfo}>No events scheduled</Text>
+          <Text style={styles.cardTitle}>Upcoming Assignment</Text>
+          <Text style={styles.cardInfo}>No Assignment scheduled</Text>
         </View>
       </View>
 
       {/* Attendance Trend Chart */}
       <AttendanceTrend />
+
+      {/* Latest Notification */}
+      <LatestNotification />
     </ScrollView>
   );
 };
@@ -154,15 +201,15 @@ const styles = StyleSheet.create({
   },
   card: {
     flex: 1,
-    marginRight: 10,
+    marginRight: 5,
     backgroundColor: '#fff',
-    padding: 15,
+    padding: 14,
     borderRadius: 10,
     shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
-    elevation: 4,
+    shadowOpacity: 0.5, // Increased for darker shadow
+    shadowOffset: { width: 5, height: 5 }, // Increased width and height for larger shadow
+    shadowRadius: 10, // Increased blur for a softer shadow
+    elevation: 10, // Increased elevation for Android
     alignItems: 'center',
   },
   cardTitle: {

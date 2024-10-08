@@ -84,7 +84,7 @@ const SignInButton=( p : any)=>{
       
         {/* Email Field */}
         <View style={sty.textField}>
-          <TextInput placeholder='User Email'
+          <TextInput placeholder='Registation Number'
                     placeholderTextColor={'#9d9d9d'}
                     style={sty.textInputField}
                     value={userRegNo} // Ensure the value is linked to state
@@ -94,7 +94,7 @@ const SignInButton=( p : any)=>{
 
         {/* Password Field */}
         <View style={sty.textField}>
-          <TextInput placeholder='User Password'
+          <TextInput placeholder='Password'
                     placeholderTextColor={'#9d9d9d'}
                     secureTextEntry
                     style={sty.textInputField}
