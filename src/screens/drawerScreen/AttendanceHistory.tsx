@@ -2,6 +2,8 @@ import { View, Text, FlatList, StyleSheet, ActivityIndicator } from 'react-nativ
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+
+
 const AttendanceHistory = ({ route }: any) => {
   const { userRegNo } = route.params;  // Get the regNo passed via route
   const [attendanceData, setAttendanceData] = useState([]);  // State for storing attendance data
@@ -28,7 +30,7 @@ const AttendanceHistory = ({ route }: any) => {
     return (
       <View style={styles.loaderContainer}>
         <ActivityIndicator size="large" color="#0000ff" />
-        <Text>Loading Attendance Data...</Text>
+        <Text >Loading Attendance Data...</Text>
       </View>
     );
   }
@@ -77,7 +79,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    color: '#000',
+    color: '#00213b',
     textAlign: 'center',
   },
   itemContainer: {
@@ -99,7 +101,7 @@ const styles = StyleSheet.create({
   keyText: {
     fontWeight: 'bold',
     fontSize: 16,
-    color: '#333',
+    color: '#00213b',
   },
   valueText: {
     fontSize: 16,

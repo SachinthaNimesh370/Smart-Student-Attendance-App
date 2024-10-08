@@ -76,7 +76,7 @@ const AttendancePercentage = ({ userRegNo }: { userRegNo: string }) => {
             />
             {/* Adding a view to simulate the doughnut hole */}
             <View style={styles.doughnutHole}>
-              <Text style={styles.doughnutText}>{attendancePercentage.toFixed(2)}%</Text>
+              <Text style={styles.doughnutText}>{attendancePercentage.toFixed(0)}%</Text>
             </View>
           </View>
         </>

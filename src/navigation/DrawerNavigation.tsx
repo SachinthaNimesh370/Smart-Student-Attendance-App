@@ -4,9 +4,9 @@ import { View, Text, StyleSheet } from 'react-native';
 import Home from '../screens/drawerScreen/Home';
 import MarkAttendance from '../screens/drawerScreen/MarkAttendance';
 import AttendanceHistory from '../screens/drawerScreen/AttendanceHistory';
-import TimeTable from '../screens/drawerScreen/Notification';
 import SecurityAndPrivacy from '../screens/drawerScreen/SecurityAndPrivacy';
 import Ionicons from 'react-native-vector-icons/Ionicons'; // Update import
+import Notification from '../screens/drawerScreen/Notification';
 
 const Drawer = createDrawerNavigator();
 
@@ -109,12 +109,12 @@ const Drawer_Navigation = ({ route, navigation }: any) => {
         }}
       />
       <Drawer.Screen
-        name="Time Table"
-        component={TimeTable}
+        name="Notification"
+        component={Notification}
         initialParams={{ userRegNo }}
         options={{
           drawerIcon: ({ color, size }) => (
-            <Ionicons name="calendar-outline" size={size} color={'#00213b'} />
+            <Ionicons name="notifications-outline" size={size} color={'#00213b'} />
           ),
           drawerLabelStyle: {
             color: '#00213b',
@@ -152,6 +152,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
     marginBottom: 40,
+    borderTopWidth: 2,
+    borderBottomWidth: 2,
     // backgroundColor: '#a0d5ff',
     
     borderRadius: 5,
