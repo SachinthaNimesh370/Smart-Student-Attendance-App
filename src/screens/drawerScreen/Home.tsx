@@ -6,6 +6,7 @@ import { PieChart, LineChart } from 'react-native-chart-kit';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const screenWidth = Dimensions.get('window').width;
+
 // NotificationDTO interface
 interface NotificationDTO {
   id: number;
@@ -49,30 +50,35 @@ const AttendancePercentage = ({ userRegNo }: { userRegNo: string }) => {
   }, [userRegNo]);
 
   const chartData = attendancePercentage !== null ? [
-    { name: 'Present', population: attendancePercentage, color: '#4CAF50', legendFontColor: '#333', legendFontSize: 10 },
-    { name: 'Absent', population: 100 - attendancePercentage, color: '#F44336', legendFontColor: '#333', legendFontSize: 10 },
+    { name: 'Present', population: attendancePercentage, color: '#FFC300', legendFontColor: '#333', legendFontSize: 10 },
+    { name: 'Absent', population: 100 - attendancePercentage, color: '#fb5f53', legendFontColor: '#333', legendFontSize: 10 },
   ] : [];
 
   return (
     <View style={styles.pieChartContainer}>
       {attendancePercentage !== null ? (
         <>
-          <PieChart
-            data={chartData}
-            width={screenWidth - 270}   // Adjusted width
-            height={100}                // Adjusted height
-            chartConfig={{
-              backgroundColor: '#1cc910',
-              backgroundGradientFrom: '#eff3ff',
-              backgroundGradientTo: '#efefef',
-              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-            }}
-            accessor="population"
-            backgroundColor="transparent"
-            paddingLeft="15"
-            absolute
-          />
-          <Text style={styles.percentage}>Attendance Percentage: {attendancePercentage.toFixed(2)}%</Text>
+          <View style={{ position: 'relative' }}>
+            <PieChart
+              data={chartData}
+              width={screenWidth - 270}   // Adjusted width
+              height={150}                // Adjusted height
+              chartConfig={{
+                backgroundColor: '#1cc910',
+                backgroundGradientFrom: '#eff3ff',
+                backgroundGradientTo: '#efefef',
+                color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              }}
+              accessor="population"
+              backgroundColor="transparent"
+              paddingLeft="15"
+              absolute
+            />
+            {/* Adding a view to simulate the doughnut hole */}
+            <View style={styles.doughnutHole}>
+              <Text style={styles.doughnutText}>{attendancePercentage.toFixed(2)}%</Text>
+            </View>
+          </View>
         </>
       ) : (
         <Text style={styles.loadingText}>Loading attendance data...</Text>
@@ -95,8 +101,8 @@ const AttendanceTrend = () => {
         height={220}
         chartConfig={{
           backgroundColor: '#e26a00',
-          backgroundGradientFrom: '#fb8c00',
-          backgroundGradientTo: '#ffa726',
+          backgroundGradientFrom: '#ffa533',
+          backgroundGradientTo: '#ffb969',
           color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
         }}
@@ -127,7 +133,7 @@ const LatestNotification = () => {
   }, []);
 
   return (
-    <View style={[styles.card ,{backgroundColor: '#fffce2'}]}>
+    <View style={[styles.card, { backgroundColor: '#fffce2' }]}>
       <Ionicons name="notifications-outline" size={40} color="#FF5722" />
       <Text style={styles.cardTitle}>Latest Notification</Text>
       {latestNotification ? (
@@ -160,7 +166,7 @@ const Home = ({ route }: any) => {
           <Text style={styles.cardTitle}>Attendance</Text>
           <AttendancePercentage userRegNo={userRegNo} />
         </View>
-        <View style={styles.card }>
+        <View style={styles.card}>
           <Ionicons name="calendar-outline" size={40} color="#FF9800" />
           <Text style={styles.cardTitle}>Upcoming Assignment</Text>
           <Text style={styles.cardInfo}>No Assignment scheduled</Text>
@@ -246,6 +252,22 @@ const styles = StyleSheet.create({
   pieChartContainer: {
     alignItems: 'center', // Center the pie chart and text
     marginBottom: 20,     // Add space between components
+  },
+  doughnutHole: {
+    position: 'absolute',
+    top: '30%',  // Centering the hole vertically
+    left: '20%',  // Centering the hole horizontally
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: '#f9f9f9',  // Background color to match the container
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  doughnutText: {
+    fontSize: 16,
+    color: '#333',
+    fontWeight: 'bold',
   },
 });
 
