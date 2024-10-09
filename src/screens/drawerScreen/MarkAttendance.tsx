@@ -130,7 +130,9 @@ const Buttn = ({ userRegNo }: any) => {
     <View style={sty.area}>
       <TouchableOpacity onPress={requestPermission} activeOpacity={0.5} disabled={loading} style={sty.button}>
         <View style={sty.signInButton}>
-          <Icon name="power-outline" size={150} color="white" />
+          
+          <Icon name="power-outline" size={30} color="white" />
+          <Text style={sty.txt}>Mark Attendance</Text>
           {loading && (
             <ActivityIndicator size={350} color="#2471ff" style={sty.loadingIndicator} /> // Center loading icon
           )}
@@ -156,7 +158,7 @@ const sty = StyleSheet.create({
     backgroundColor: 'white',
   },
   area: {
-    marginTop: 200,
+    marginTop: 500,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -166,13 +168,22 @@ const sty = StyleSheet.create({
   },
   signInButton: {
     backgroundColor: '#367cfe',
-    height: 250,
-    width: 250,
-    borderRadius: 250,
-    justifyContent: 'center',
+    height: 60,
+    width: 350,
+    borderRadius: 5,
+    //  justifyContent: 'center',
+      paddingLeft:80,
+    //  flex:1,
+     flexDirection:'row',
     alignItems: 'center',
     
   },
+  txt:{
+    fontSize:20,
+    paddingLeft:10,
+    color:'white'
+  },
+
   loadingIndicator: {
     position: 'absolute', // Center the loading indicator
     top: '50%', // Center vertically

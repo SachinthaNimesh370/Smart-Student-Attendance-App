@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const TimeTable = ({ route }: any) => {
+const Notification = ({ route }: any) => {
   const { userRegNo } = route.params;
   return (
     <View>
@@ -10,4 +10,4 @@ const TimeTable = ({ route }: any) => {
   )
 }
 
-export default TimeTable
+export default Notification
