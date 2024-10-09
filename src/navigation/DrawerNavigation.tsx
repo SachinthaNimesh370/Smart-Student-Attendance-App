@@ -4,9 +4,9 @@ import { View, Text, StyleSheet } from 'react-native';
 import Home from '../screens/drawerScreen/Home';
 import MarkAttendance from '../screens/drawerScreen/MarkAttendance';
 import AttendanceHistory from '../screens/drawerScreen/AttendanceHistory';
-import TimeTable from '../screens/drawerScreen/Notification';
 import SecurityAndPrivacy from '../screens/drawerScreen/SecurityAndPrivacy';
 import Ionicons from 'react-native-vector-icons/Ionicons'; // Update import
+import Notification from '../screens/drawerScreen/Notification';
 
 const Drawer = createDrawerNavigator();
 
@@ -21,7 +21,7 @@ const Drawer_Navigation = ({ route, navigation }: any) => {
         <Ionicons
           name="person-circle-outline" // Use your preferred Ionicon
           size={50} // Icon size
-          color="#333" // Icon color
+          color="#00213b" // Icon color
           style={styles.profileIcon} // Add styling
         />
         <Text style={styles.userRegNo}>User Reg No: {userRegNo}</Text>
@@ -40,7 +40,7 @@ const Drawer_Navigation = ({ route, navigation }: any) => {
             navigation.navigate('Login'); // Navigate to login or any other screen on logout
           }}
           icon={({ color, size }) => (
-            <Ionicons name="log-out-outline" size={size} color={color} />
+            <Ionicons name="log-out-outline" size={size} color={'#00213b'} />
           )}
           labelStyle={styles.logoutLabel} // Customizing font size and weight
         />
@@ -53,8 +53,8 @@ const Drawer_Navigation = ({ route, navigation }: any) => {
       initialRouteName="Dashboard"
       screenOptions={{
         drawerStyle: {
-          backgroundColor: '#d7d7d7', // Background color of the drawer
-          width: 280,
+          backgroundColor: '#f2f5ff', // Background color of the drawer
+          width: 300,
         },
         drawerActiveTintColor: '#2196F3', // Change this to your desired blue color
         drawerInactiveTintColor: '#333', // Color for inactive items
@@ -62,6 +62,7 @@ const Drawer_Navigation = ({ route, navigation }: any) => {
           fontSize: 16,
           fontWeight: 'bold',
         },
+        
       }}
       drawerContent={(props) => <CustomDrawerContent {...props} />} // Use custom drawer content
     >
@@ -71,8 +72,12 @@ const Drawer_Navigation = ({ route, navigation }: any) => {
         initialParams={{ userRegNo }}
         options={{
           drawerIcon: ({ color, size }) => (
-            <Ionicons name="home-outline" size={size} color={color} />
+            <Ionicons name="home-outline" size={size} color={'#00213b'} />
           ),
+          drawerLabelStyle: {
+            color: '#00213b',
+            fontSize:18 // Set your desired font color here (example: Tomato color)
+          },
         }}
       />
       <Drawer.Screen
@@ -81,8 +86,12 @@ const Drawer_Navigation = ({ route, navigation }: any) => {
         initialParams={{ userRegNo }}
         options={{
           drawerIcon: ({ color, size }) => (
-            <Ionicons name="checkmark-circle-outline" size={size} color={color} />
+            <Ionicons name="checkmark-circle-outline" size={size} color={'#00213b'} />
           ),
+          drawerLabelStyle: {
+            color: '#00213b',
+            fontSize:18 // Set your desired font color here (example: Tomato color)
+          },
         }}
       />
       <Drawer.Screen
@@ -91,20 +100,28 @@ const Drawer_Navigation = ({ route, navigation }: any) => {
         initialParams={{ userRegNo }}
         options={{
           drawerIcon: ({ color, size }) => (
-            <Ionicons name="time-outline" size={size} color={color} />
+            <Ionicons name="time-outline" size={size} color={'#00213b'} />
           ),
+          drawerLabelStyle: {
+            color: '#00213b',
+            fontSize:18 // Set your desired font color here (example: Tomato color)
+          },
         }}
       />
       <Drawer.Screen
-        name="Time Table"
-        component={TimeTable}
+        name="Notification"
+        component={Notification}
         initialParams={{ userRegNo }}
         options={{
           drawerIcon: ({ color, size }) => (
-            <Ionicons name="calendar-outline" size={size} color={color} />
+            <Ionicons name="notifications-outline" size={size} color={'#00213b'} />
           ),
+          drawerLabelStyle: {
+            color: '#00213b',
+            fontSize:18 // Set your desired font color here (example: Tomato color)
+          },
         }}
-      />
+      />  
       
       <Drawer.Screen
         name="Security & Privacy"
@@ -112,8 +129,12 @@ const Drawer_Navigation = ({ route, navigation }: any) => {
         initialParams={{ userRegNo }}
         options={{
           drawerIcon: ({ color, size }) => (
-            <Ionicons name="lock-closed-outline" size={size} color={color} />
+            <Ionicons name="lock-closed-outline" size={size} color={'#00213b'} />
           ),
+          drawerLabelStyle: {
+            color: '#00213b',
+            fontSize:18 // Set your desired font color here (example: Tomato color)
+          },
         }}
       />
     </Drawer.Navigator>
@@ -131,7 +152,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
     marginBottom: 40,
-    backgroundColor: '#62b9ff',
+    borderTopWidth: 2,
+    borderBottomWidth: 2,
+    // backgroundColor: '#a0d5ff',
+    
     borderRadius: 5,
     shadowColor: 'black',
   },
@@ -141,13 +165,13 @@ const styles = StyleSheet.create({
   userRegNo: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#00213b',
   },
   logoutSection: {
     marginTop: 'auto', // Push it to the bottom
-    borderTopWidth: 3,
+    borderTopWidth: 2,
     borderTopColor: '#ccc',
-    backgroundColor:'#d0d0d0',
+    
     borderRadius:5
 
   },
