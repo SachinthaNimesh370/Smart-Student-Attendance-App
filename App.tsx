@@ -4,8 +4,13 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import Drawer_Navigation from './src/navigation/DrawerNavigation';
 import StackNavigation from './src/navigation/StackNavigation';
+import { Camera } from 'react-native-vision-camera';
 
+const cameraPermission = Camera.getCameraPermissionStatus()
 export default function App() {
+
+
+
   return (
     <View style={sty.container}>
       {/* <Drawer_Navigation/> */}

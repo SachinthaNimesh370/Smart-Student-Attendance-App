@@ -4,6 +4,10 @@ import axios from 'axios';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Geolocation from '@react-native-community/geolocation';
 import { PermissionsAndroid } from 'react-native';
+import { Camera, useCameraDevice, useCameraPermission } from 'react-native-vision-camera';
+
+const cameraPermission = Camera.getCameraPermissionStatus()
+
 
 const Buttn = ({ userRegNo }: any) => {
   type LocationValidation = {
@@ -22,7 +26,7 @@ const Buttn = ({ userRegNo }: any) => {
     const locations: { latitude: number; longitude: number }[] = [];
     setLoading(true); // Set loading to true when starting to get location
 
-    for (let i = 0; i < 10; i++) { // Increased the number of location samples to 15
+    for (let i = 0; i < 5; i++) { // Increased the number of location samples to 15
       await new Promise((resolve) => {
         Geolocation.getCurrentPosition(
           position => {
@@ -31,12 +35,12 @@ const Buttn = ({ userRegNo }: any) => {
             resolve(null);
           },
           error => {
-            Alert.alert('Error', error.message); // Alert error message
+            // Alert.alert('Error', error.message); // Alert error message
             resolve(null); // Resolve even on error to continue the loop
           },
           {
             enableHighAccuracy: true, // Highest possible accuracy
-            timeout: 30000, // Increased timeout to allow more accurate readings
+            timeout: 10000, // Increased timeout to allow more accurate readings
             maximumAge: 0, // No cached data, force a fresh location
             distanceFilter: 0, // Track location even with small movements
           }
@@ -126,8 +130,11 @@ const Buttn = ({ userRegNo }: any) => {
     }
   };
 
+
   return (
     <View style={sty.area}>
+      
+      
       <TouchableOpacity onPress={requestPermission} activeOpacity={0.5} disabled={loading} style={sty.button}>
         <View style={sty.signInButton}>
           
@@ -146,7 +153,7 @@ const MarkAttendance = ({ route }: any) => {
   const { userRegNo } = route.params;
   return (
     <View style={sty.container}>
-      <Text style={{ fontSize: 60, color: 'black' }}>Mark Attendance</Text>
+      {/* <Text style={{ fontSize: 60, color: 'black' }}>Mark Attendance</Text> */}
       <Buttn userRegNo={userRegNo} />
     </View>
   );
@@ -158,7 +165,7 @@ const sty = StyleSheet.create({
     backgroundColor: 'white',
   },
   area: {
-    marginTop: 500,
+    marginTop: 550,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -169,10 +176,10 @@ const sty = StyleSheet.create({
   signInButton: {
     backgroundColor: '#367cfe',
     height: 60,
-    width: 350,
+    width: 400,
     borderRadius: 5,
     //  justifyContent: 'center',
-      paddingLeft:80,
+      paddingLeft:100,
     //  flex:1,
      flexDirection:'row',
     alignItems: 'center',
@@ -180,7 +187,7 @@ const sty = StyleSheet.create({
   },
   txt:{
     fontSize:20,
-    paddingLeft:10,
+    paddingLeft:20,
     color:'white'
   },
 
@@ -188,8 +195,8 @@ const sty = StyleSheet.create({
     position: 'absolute', // Center the loading indicator
     top: '50%', // Center vertically
     left: '50%', // Center horizontally
-    marginLeft: -175, // Adjust horizontally based on the size of the icon
-    marginTop: -175, // Adjust vertically based on the size of the icon
+    marginLeft: -138, // Adjust horizontally based on the size of the icon
+    marginTop: -400, // Adjust vertically based on the size of the icon
   },
 });
 
