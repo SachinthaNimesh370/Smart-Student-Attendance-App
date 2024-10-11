@@ -20,7 +20,7 @@ const HedederText=()=>{
   return(
     <View style={sty.hederTextArea}>
       <Text style={sty.hederText}>
-        {'Attendance System'}
+        {'EDUMARK \n SYSTEM'}
       </Text>
     </View>
   )
