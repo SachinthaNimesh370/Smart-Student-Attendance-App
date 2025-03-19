@@ -18,7 +18,7 @@ const Notification = ({ route }: any) => {
 
   useEffect(() => {
     // Fetch notifications from your backend API
-    fetch('http://192.168.0.153:8090/api/v1/student/getAllNotifications')
+    fetch('http://192.168.168.61:8090/api/v1/student/getAllNotifications')
       .then((response) => response.json())
       .then((data: NotificationDTO[]) => {
         setNotifications(data);
