@@ -17,11 +17,14 @@ const Notification = ({ route }: any) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch notifications from your backend API
-    fetch('http://192.168.168.61:8090/api/v1/student/getAllNotifications')
+    fetch('http://10.102.18.25:8090/api/v1/notification/getAllNotifications')
       .then((response) => response.json())
-      .then((data: NotificationDTO[]) => {
-        setNotifications(data);
+      .then((data) => {
+        if (data.code === 200) {
+          setNotifications(data.data); // ✅ Access the "data" property
+        } else {
+          console.error('Server returned error:', data.message);
+        }
         setLoading(false);
       })
       .catch((error) => {

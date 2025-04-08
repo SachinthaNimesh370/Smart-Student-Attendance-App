@@ -21,8 +21,9 @@ const AttendancePercentage = ({ userRegNo }: { userRegNo: string }) => {
   useEffect(() => {
     const fetchAttendanceData = async () => {
       try {
-        const response = await axios.get(`http://192.168.168.61:8090/api/v1/student/getAttendanceByRegNo/${userRegNo}`);
+        const response = await axios.get(`http://10.102.18.25:8090/api/v1/controller/getAttendanceByRegNo/${userRegNo}`);
         const attendanceData = response.data.data[0];
+        console.log(attendanceData);
         let totalDays = 0;
         let presentDays = 0;
 
@@ -119,8 +120,9 @@ const LatestNotification = () => {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const response = await axios.get('http://192.168.168.61:8090/api/v1/student/getAllNotifications');
-        const notifications = response.data;
+        const response = await axios.get('http://10.102.18.25:8090/api/v1/notification/getAllNotifications');
+        const notifications = response.data.data;
+        console.log(notifications)
         if (notifications.length > 0) {
           setLatestNotification(notifications[0]); // Display the latest notification (assuming the first is the latest)
         }

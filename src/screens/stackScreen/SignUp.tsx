@@ -54,7 +54,7 @@ const SignInButton=( p : any)=>{
       if(userConfiPassword==userPassword){
         try {
         
-        const response = await axios.post('http://192.168.168.61:8090/api/v1/student/signUp', studentData); 
+        const response = await axios.post('http://10.102.18.25:8090/api/v1/auth/signUp', studentData); 
         console.log(response.data.data);
         Alert.alert("Registation Successfull !","Wait for Confirm Your Details");
         setRegNumber("");

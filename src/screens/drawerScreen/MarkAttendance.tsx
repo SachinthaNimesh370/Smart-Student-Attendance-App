@@ -40,7 +40,7 @@ const Buttn = ({ userRegNo }: any) => {
           },
           {
             enableHighAccuracy: true, // Highest possible accuracy
-            timeout: 10000, // Increased timeout to allow more accurate readings
+            timeout: 1000, // Increased timeout to allow more accurate readings
             maximumAge: 0, // No cached data, force a fresh location
             distanceFilter: 0, // Track location even with small movements
           }
@@ -122,7 +122,7 @@ const Buttn = ({ userRegNo }: any) => {
   const saveStudent = async (attendanceData: any) => {
     console.log(attendanceData);
     try {
-      const response = await axios.post('http://192.168.168.61:8090/api/v1/student/attendMark', attendanceData);
+      const response = await axios.post('http://10.102.18.25:8090/api/v1/controller/attendMark', attendanceData);
       Alert.alert( response.data.data); // Ensure text is wrapped in <Text>
     } catch (error: any) {
       console.error('Error while saving student:', error);

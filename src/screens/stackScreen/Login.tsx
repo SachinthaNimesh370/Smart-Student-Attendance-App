@@ -45,11 +45,11 @@ const SignInButton=( p : any)=>{
       
       try {
         //const response = await axios.post('http://localhost:8090/api/v1/student/signIn', studentData);
-        const response = await axios.post('http://192.168.168.61:8090/api/v1/student/signIn', studentData);
+        const response = await axios.post('http://10.102.18.25:8090/api/v1/auth/signIn', studentData);
 
-        console.log(response.data.data);
+        console.log(response.data.message);
         
-        if (response.data.data === true) {
+        if (response.data.message === 'Success') {
           // Alert.alert("Sign In Successful!");
           console.log(studentData.studentRegNo + " In Login Page ");
           stack.navigate('Drawer', { userRegNo: studentData.studentRegNo });
